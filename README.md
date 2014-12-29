@@ -32,7 +32,7 @@ Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User',
 
 
 function successCallback(data){
-	// .... json array or json object
+	// .... json array or json object depends of Liferay SDK method
 }
 
 ```
