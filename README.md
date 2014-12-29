@@ -11,6 +11,7 @@ Liferay.connect(null, null, 'http://10.0.2.2:8080', 'test@liferay.com', 'test' )
 ``` 
 cordova plugin add https://github.com/salvatejero/cordova-liferay-plugin.git
 ``` 
+
 ### Supported Platforms:
 
 - Android
