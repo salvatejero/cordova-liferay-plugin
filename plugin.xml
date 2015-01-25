@@ -46,5 +46,15 @@
         <source-file src="src/android/LiferayPlugin.java" target-dir="src/salvatejero/cordova/liferay" />
     </platform>
 
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Liferay">
+                <param name="ios-package" value="LiferayPlugin"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/LiferayPlugin.h" />
+        <source-file src="src/ios/LiferayPlugin.m" />
+    </platform>
 
 </plugin>

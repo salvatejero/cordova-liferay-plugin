@@ -184,7 +184,7 @@ public class LiferayPlugin extends CordovaPlugin {
 		}
 		Method[] methods = service.getClass().getMethods();
 		for(Method m: methods){
-			if(m.getName().equals(methodName)){
+			if(m.getName().equals(methodName) || methodName.indexOf(m.getName()) >=0){
 				
 				if(values.length() != m.getParameterTypes().length){
 					throw new LiferayPluginException("Number of params error for the method " + methodName);
