@@ -14,8 +14,8 @@ cordova plugin add https://github.com/salvatejero/cordova-liferay-plugin.git
 
 ### Supported Platforms:
 
-- Android
-- IOS: comming soon
+- Android.
+- IOS.
 - WP: comming soon
 
 ##Requirements:
@@ -23,6 +23,8 @@ cordova plugin add https://github.com/salvatejero/cordova-liferay-plugin.git
 This plugin requires Liferay SDK.
 
 - Add Liferay SDK to your project: [Liferay SDK dev site](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/mobile "Liferay SDK dev site").
+
+- In iOS, if you use pods, you must install first all plugins that you will use in the project because then it isn't possible to include.  
 
 
 ### Quick Example
@@ -36,6 +38,10 @@ function successCallback(data){
 }
 
 ```
+Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddressWithCompanyId', ['10154', 'test@liferay.com']);
+
+```
+- In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback  
 
 
 ## ClassNames Implemented
