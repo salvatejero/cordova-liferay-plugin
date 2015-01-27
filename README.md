@@ -30,6 +30,7 @@ This plugin requires Liferay SDK.
 ### Quick Example
 
 ``` 
+
 Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddress', ['10154', 'test@liferay.com']);
 
 
@@ -37,11 +38,21 @@ function successCallback(data){
 	// .... json array or json object depends of Liferay SDK method
 }
 
-```
-Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddressWithCompanyId', ['10154', 'test@liferay.com']);
 
 ```
-- In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback  
+
+## iOS 
+- In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback.
+- In iOS methods name are different to Android API. You can choose whichever.
+
+``` 
+Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddress', ['10154', 'test@liferay.com']);
+
+Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddressWithCompanyId', ['10154', 'test@liferay.com']);
+
+//both invoke return the same and works in any platform.
+
+``` 
 
 
 ## ClassNames Implemented
