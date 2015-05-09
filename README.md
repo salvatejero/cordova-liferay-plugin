@@ -27,6 +27,12 @@ This plugin requires Liferay SDK.
 
 - In iOS, if you use pods, you must install first all plugins that you will use in the project because then it isn't possible to include.  
 
+- In Windows Phone 8 (WP8), you must use this sdk version [Ithildir](https://github.com/Ithildir/liferay-sdk-builder-windows) or use NuGet
+````
+
+Install-Package Liferay.SDK
+
+```
 
 ### Quick Example
 
@@ -44,7 +50,7 @@ function successCallback(data){
 
 ## iOS 
 - In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback.
-- In iOS methods name are different to Android API. You can choose whichever.
+- In iOS methods name are different to Android and WP API. You can choose whichever.
 
 ``` 
 Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddress', ['10154', 'test@liferay.com']);
@@ -56,7 +62,7 @@ Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User',
 ``` 
 ## Windows Phone 8
 
-- In Windows Phone methods name are different to Android API. You can choose whichever
+- In Windows Phone methods name are different to Android and IOS API. You can choose whichever
 
 ## ClassNames Implemented
 ``` 
