@@ -27,12 +27,7 @@ This plugin requires Liferay SDK.
 
 - In iOS, if you use pods, you must install first all plugins that you will use in the project because then it isn't possible to include.  
 
-- In Windows Phone 8 (WP8), you must use this sdk version [Ithildir](https://github.com/Ithildir/liferay-sdk-builder-windows) or use NuGet
-````
-
-Install-Package Liferay.SDK
-
-```
+- In Windows Phone 8 (WP8), you must use this sdk version [Ithildir](https://github.com/Ithildir/liferay-sdk-builder-windows).
 
 ### Quick Example
 
