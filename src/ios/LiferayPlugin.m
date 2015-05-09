@@ -46,8 +46,8 @@
         methodNameString = [NSString stringWithCString: sel_getName(method_getName(method))
                                                         encoding: NSASCIIStringEncoding];
         
-        
-        if([methodNameString hasPrefix:methodName])
+        NSString * methodName2 = [methodNameString stringByReplacingOccurrencesOfString: @ "Async" withString: @ ""];
+        if([methodNameString hasPrefix:methodName] || [[methodName2 lowercaseString] hasPrefix:methodName])
         {
             numberParams = method_getNumberOfArguments(method) - 2;  // Count only the method's parameters
             if(numberParams == [jsonArray count] + 1){

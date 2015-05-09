@@ -4,6 +4,7 @@ cordova-liferay-plugin
 This plugin defines a global 'Liferay' object, which describes the interface to Liferay SDK.
 Although the object is in the global scope, it is not available until after the 'deviceready' event.
 
+If you find any bug, please create a Issue.
 ``` 
 Liferay.connect(null, null, 'http://10.0.2.2:8080', 'test@liferay.com', 'test' );
 ``` 
@@ -16,7 +17,7 @@ cordova plugin add https://github.com/salvatejero/cordova-liferay-plugin.git
 
 - Android.
 - IOS.
-- WP: comming soon
+- WP
 
 ##Requirements:
 
@@ -53,7 +54,9 @@ Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User',
 //both invoke return the same and works in any platform.
 
 ``` 
+## Windows Phone 8
 
+- In Windows Phone methods name are different to Android API. You can choose whichever
 
 ## ClassNames Implemented
 ``` 

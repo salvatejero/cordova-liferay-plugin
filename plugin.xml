@@ -56,5 +56,17 @@
         <header-file src="src/ios/LiferayPlugin.h" />
         <source-file src="src/ios/LiferayPlugin.m" />
     </platform>
+    <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Liferay">
+                <param name="wp-package" value="LiferayPlugin"/>
+            </feature>
+        </config-file>
 
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_NETWORKING" />
+        </config-file>
+
+        <source-file src="src/wp/LiferayPlugin.cs" />
+    </platform>
 </plugin>
