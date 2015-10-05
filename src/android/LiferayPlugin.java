@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.liferay.mobile.android.auth.basic.BasicAuthentication;
 import com.liferay.mobile.android.service.BaseService;
 import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.service.SessionImpl;
@@ -88,6 +89,7 @@ import com.liferay.mobile.android.v62.passwordpolicy.PasswordPolicyService;
 import com.liferay.mobile.android.v62.permission.PermissionService;
 import com.liferay.mobile.android.v62.phone.PhoneService;
 import com.liferay.mobile.android.v62.portal.PortalService;
+import com.liferay.mobile.android.v62.portlet.PortletService;
 import com.liferay.mobile.android.v62.portletpreferences.PortletPreferencesService;
 import com.liferay.mobile.android.v62.repository.RepositoryService;
 import com.liferay.mobile.android.v62.resourcepermission.ResourcePermissionService;
@@ -184,7 +186,7 @@ public class LiferayPlugin extends CordovaPlugin {
 		}
 		Method[] methods = service.getClass().getMethods();
 		for(Method m: methods){
-			if(m.getName().equals(methodName) || methodName.indexOf(m.getName()) >=0){
+			if(m.getName().toLowerCase().equals(methodName) || methodName.toLowerCase().indexOf(m.getName().toLowerCase()) >=0){
 				
 				if(values.length() != m.getParameterTypes().length){
 					throw new LiferayPluginException("Number of params error for the method " + methodName);
@@ -244,9 +246,9 @@ public class LiferayPlugin extends CordovaPlugin {
 
 		cordova.getThreadPool().execute(new Runnable() {
 			public void run() {
-				session = new SessionImpl(urlServer, userName, password);
+				session = new SessionImpl(urlServer, new BasicAuthentication(userName, password));
 				try {
-					JSONObject user = getUser(session);
+					JSONObject user = getUser(session, userName);
 					PluginResult pluginResult = new PluginResult(
 							PluginResult.Status.OK, user);
 					pluginResult.setKeepCallback(true);
@@ -262,10 +264,10 @@ public class LiferayPlugin extends CordovaPlugin {
 	}
 
 	
-	protected JSONObject getUser(Session session) throws Exception {
+	protected JSONObject getUser(Session session, String username) throws Exception {
 		UserService userService = new UserService(session);
 		
-		JSONObject user = userService.getUserByEmailAddress(preferences.getInteger("liferay-company-default", 10154), session.getUsername());
+		JSONObject user = userService.getUserByEmailAddress(preferences.getInteger("liferay-company-default", 10154), username);
 		return user;	
 	}
 	
@@ -390,7 +392,7 @@ public class LiferayPlugin extends CordovaPlugin {
 		}else if(className.equals("Portal")){
 			service = new PortalService(session);
 		}else if(className.equals("com.liferay.portal.model.Portlet")){
-			service = new PortalService(session);
+			service = new PortletService(session);
 		}else if(className.equals("com.liferay.portal.model.PortletPreferences")){
 			service = new PortletPreferencesService(session);
 		}else if(className.equals("com.liferay.portal.model.Repository")){

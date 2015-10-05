@@ -4,6 +4,16 @@ cordova-liferay-plugin
 This plugin defines a global 'Liferay' object, which describes the interface to Liferay SDK.
 Although the object is in the global scope, it is not available until after the 'deviceready' event.
 
+If you find any bug, please create a Issue.
+
+``` 
+### Supported versions: (Authentication)
+
+- Android: 6.2.0.22.
+- IOS: 6.2.0.21.
+- WP
+``` 
+
 ``` 
 Liferay.connect(null, null, 'http://10.0.2.2:8080', 'test@liferay.com', 'test' );
 ``` 
@@ -16,7 +26,7 @@ cordova plugin add https://github.com/salvatejero/cordova-liferay-plugin.git
 
 - Android.
 - IOS.
-- WP: comming soon
+- WP
 
 ##Requirements:
 
@@ -26,6 +36,7 @@ This plugin requires Liferay SDK.
 
 - In iOS, if you use pods, you must install first all plugins that you will use in the project because then it isn't possible to include.  
 
+- In Windows Phone 8 (WP8), you must use this sdk version [Ithildir](https://github.com/Ithildir/liferay-sdk-builder-windows).
 
 ### Quick Example
 
@@ -43,7 +54,7 @@ function successCallback(data){
 
 ## iOS 
 - In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback.
-- In iOS methods name are different to Android API. You can choose whichever.
+- In iOS methods name are different to Android and WP API. You can choose whichever.
 
 ``` 
 Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User', 'getUserByEmailAddress', ['10154', 'test@liferay.com']);
@@ -53,7 +64,9 @@ Liferay.execute(successCallback, errorCallback, 'com.liferay.portal.model.User',
 //both invoke return the same and works in any platform.
 
 ``` 
+## Windows Phone 8
 
+- In Windows Phone methods name are different to Android and IOS API. You can choose whichever
 
 ## ClassNames Implemented
 ``` 

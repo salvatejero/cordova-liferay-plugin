@@ -7,6 +7,7 @@
 //
 
 #import "LiferayPlugin.h"
+#import "LRBasicAuthentication.h"
 #import "LRCallback.h"
 
 @implementation LiferayPlugin
@@ -17,7 +18,9 @@
 {
     NSArray *params = command.arguments;
     callbackId = command.callbackId;
-    session = [[LRSession alloc] initWithServer:params[0] username:params[1] password:params[2]];
+    session = [[LRSession alloc] initWithServer:params[0]
+                                            authentication:[[LRBasicAuthentication alloc] initWithUsername:params[1] password:params[2]]];
+    
     [self getUser];
     
 }
@@ -46,8 +49,8 @@
         methodNameString = [NSString stringWithCString: sel_getName(method_getName(method))
                                                         encoding: NSASCIIStringEncoding];
         
-        
-        if([methodNameString hasPrefix:methodName])
+        NSString * methodName2 = [methodNameString stringByReplacingOccurrencesOfString: @ "Async" withString: @ ""];
+        if([methodNameString hasPrefix:methodName] || [[methodName2 lowercaseString] hasPrefix:methodName])
         {
             numberParams = method_getNumberOfArguments(method) - 2;  // Count only the method's parameters
             if(numberParams == [jsonArray count] + 1){
