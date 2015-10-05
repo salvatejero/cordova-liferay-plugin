@@ -19,9 +19,9 @@
     NSArray *params = command.arguments;
     callbackId = command.callbackId;
     session = [[LRSession alloc] initWithServer:params[0]
-                                            authentication:[[LRBasicAuthentication alloc] initWithUsername:params[1] password:params[2]]];
+                                 authentication:[[LRBasicAuthentication alloc] initWithUsername:params[1] password:params[2]]];
     
-    [self getUser];
+    [self getUser: params[1]];
     
 }
 
@@ -47,7 +47,7 @@
     for (unsigned int i = 0; i < methodCount; i++) {
         Method method = methods[i];
         methodNameString = [NSString stringWithCString: sel_getName(method_getName(method))
-                                                        encoding: NSASCIIStringEncoding];
+                                              encoding: NSASCIIStringEncoding];
         
         NSString * methodName2 = [methodNameString stringByReplacingOccurrencesOfString: @ "Async" withString: @ ""];
         if([methodNameString hasPrefix:methodName] || [[methodName2 lowercaseString] hasPrefix:methodName])
@@ -58,7 +58,7 @@
                 methodToExecute = &method;
                 break;
             }else{
-               NSLog(@"the method '%@' is similar but params is incorrect, is it the method that you are looking for? ",methodNameString); 
+                NSLog(@"the method '%@' is similar but params is incorrect, is it the method that you are looking for? ",methodNameString);
             }
             
             
@@ -69,7 +69,7 @@
     if(methodToExecute != nil){
         
         NSLog(@"%s", method_getTypeEncoding(*methodToExecute));
-
+        
         SEL sel = NSSelectorFromString(methodNameString);
         NSMethodSignature *sig = [[service class] instanceMethodSignatureForSelector:sel];
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
@@ -140,7 +140,7 @@
     }else  if ([className isEqualToString:@"com.liferay.portlet.asset.model.AssetTag"]) {
         service = [[LRAssetTagService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"com.liferay.portlet.asset.model.AssetVocabulary"]) {
-         service = [[LRAssetVocabularyService_v62 alloc]initWithSession:session];
+        service = [[LRAssetVocabularyService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"com.liferay.portlet.blogs.model.BlogsEntry"]) {
         service = [[LRBlogsEntryService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"com.liferay.portlet.bookmarks.model.BookmarksEntry"]) {
@@ -220,7 +220,7 @@
     }else  if ([className isEqualToString:@"com.liferay.portal.model.Organization"]) {
         service = [[LROrganizationService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"com.liferay.portal.model.OrgLabor"]) {
-       service = [[LROrgLaborService_v62 alloc]initWithSession:session];
+        service = [[LROrgLaborService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"com.liferay.portal.model.PasswordPolicy"]) {
         service = [[LRPasswordPolicyService_v62 alloc]initWithSession:session];
     }else  if ([className isEqualToString:@"Permission"]) {
@@ -256,14 +256,14 @@
     return service;
 }
 
--(void)getUser
+-(void)getUser:(NSString*)username
 {
-
+    
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     long long defaultCompanyId = [[infoDict objectForKey:@"default-company-id"] longLongValue];
     NSError *error;
     LRUserService_v62 *service = [[LRUserService_v62 alloc] initWithSession:session];
-    NSDictionary *user = [service getUserByEmailAddressWithCompanyId:defaultCompanyId emailAddress: session.username error:&error];
+    NSDictionary *user = [service getUserByEmailAddressWithCompanyId:defaultCompanyId emailAddress: username error:&error];
     NSLog(@"%@", error);
     [self sendPluginResult:user withErrorMessage: [error localizedDescription]];
 }
@@ -307,7 +307,7 @@
     else
     {
         cvResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[result array]];
-
+        
     }
     [cvResult setKeepCallbackAsBool:YES];
     [self.commandDelegate sendPluginResult:cvResult callbackId:callbackId];
