@@ -6,6 +6,8 @@ Although the object is in the global scope, it is not available until after the 
 
 If you find any bug, please create a Issue.
 
+Updated to last version of Cordova and Liferay
+
 ``` 
 ### Supported versions: (Authentication)
 
