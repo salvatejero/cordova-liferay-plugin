@@ -55,6 +55,8 @@ function successCallback(data){
 
 
 ```
+### Roadmap: (Authentication)
+- Add LRSign to persist connection
 
 ## iOS 
 - In iOS method invoke needs a last parameter NSError. I include it and show it in errorCallback.
