@@ -9,19 +9,20 @@
 #import "LiferayPlugin.h"
 #import "LRBasicAuthentication.h"
 #import "LRCallback.h"
+#import "LRCredentialStorage.h"
 
 @implementation LiferayPlugin
 
-@synthesize session, callbackId;
+@synthesize callbackId;
 
 - (void)connect:(CDVInvokedUrlCommand*)command
 {
     NSArray *params = command.arguments;
     callbackId = command.callbackId;
-    session = [[LRSession alloc] initWithServer:params[0]
-                                 authentication:[[LRBasicAuthentication alloc] initWithUsername:params[1] password:params[2]]];
+    LRSession * session = [[LRSession alloc] initWithServer:params[0]
+                                             authentication:[[LRBasicAuthentication alloc] initWithUsername:params[1] password:params[2]]];
     
-    [self getUser: params[1]];
+    [self getUser: params[1] withLRSession: session];
     
 }
 
@@ -30,8 +31,14 @@
     
     callbackId = command.callbackId;
     NSArray *params = command.arguments;
-    [session setCallback: self];
-    [self objectModelWithClassName:params[0] withMethodName:params[1] withParams:params[2]];
+    LRSession *session = [LRCredentialStorage getSession];
+    if(session != nil && session.authentication != nil){
+        [session setCallback: self];
+        [self objectModelWithClassName:params[0] withMethodName:params[1] withParams:params[2]];
+    }else{
+        
+        [self sendPluginResult:nil withErrorMessage: @"No session actived"];
+    }
 }
 
 -(void) objectModelWithClassName:(NSString*)className withMethodName:(NSString*) methodName withParams: (NSArray*) jsonArray
@@ -128,6 +135,8 @@
 
 -(LRBaseService*) serviceWithClassName:(NSString*) className
 {
+    LRSession *session = [LRCredentialStorage getSession];
+    
     LRBaseService *service = nil;
     if ([className isEqualToString:@"com.liferay.portal.model.User"]) {
         service = [[LRUserService_v62 alloc]initWithSession:session];
@@ -256,7 +265,7 @@
     return service;
 }
 
--(void)getUser:(NSString*)username
+-(void)getUser:(NSString*)username withLRSession: (LRSession*) session
 {
     
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -265,6 +274,13 @@
     LRUserService_v62 *service = [[LRUserService_v62 alloc] initWithSession:session];
     NSDictionary *user = [service getUserByEmailAddressWithCompanyId:defaultCompanyId emailAddress: username error:&error];
     NSLog(@"%@", error);
+    
+    if(user != nil){
+        LRBasicAuthentication *authentication = (LRBasicAuthentication *)session.authentication;
+        [LRCredentialStorage storeCredentialForServer: session.server
+                                             username: authentication.username password: authentication.password];
+        
+    }
     [self sendPluginResult:user withErrorMessage: [error localizedDescription]];
 }
 

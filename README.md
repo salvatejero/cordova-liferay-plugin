@@ -8,6 +8,8 @@ If you find any bug, please create a Issue.
 
 Updated to last version of Cordova and Liferay
 
+Added compatibility to LRCredentialStorage
+
 ``` 
 ### Supported versions: (Authentication)
 

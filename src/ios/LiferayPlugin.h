@@ -84,10 +84,10 @@
 #import "LRUserGroupGroupRoleService_v62.h"
 
 @interface LiferayPlugin :  CDVPlugin{
-    }
+}
 
 @property (copy) NSString* callbackId;
-@property (retain, strong) LRSession* session;
+
 
 - (void)connect:(CDVInvokedUrlCommand*)command;
 
