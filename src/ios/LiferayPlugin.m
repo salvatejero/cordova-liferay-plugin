@@ -32,8 +32,9 @@
     callbackId = command.callbackId;
     NSArray *params = command.arguments;
     LRSession *session = [LRCredentialStorage getSession];
+    [session setCallback: self];
     if(session != nil && session.authentication != nil){
-        [session setCallback: self];
+        
         [self objectModelWithClassName:params[0] withMethodName:params[1] withParams:params[2]];
     }else{
         
@@ -136,7 +137,7 @@
 -(LRBaseService*) serviceWithClassName:(NSString*) className
 {
     LRSession *session = [LRCredentialStorage getSession];
-    
+    [session setCallback: self];
     LRBaseService *service = nil;
     if ([className isEqualToString:@"com.liferay.portal.model.User"]) {
         service = [[LRUserService_v62 alloc]initWithSession:session];
